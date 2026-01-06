@@ -11,7 +11,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.calmkit.ui.screens.EmptyStateShowcase
 import com.example.calmkit.ui.screens.FinanceDashboardShowcase
+import com.example.calmkit.ui.screens.OnboardingShowcase
+import com.example.calmkit.ui.screens.SettingsDarkShowcase
+import com.example.calmkit.ui.screens.SettingsShowcase
 import com.example.calmkit.ui.screens.UiKitGalleryScreen
 import com.example.calmkit.ui.theme.CalmKitTheme
 
@@ -54,5 +58,37 @@ fun FinanceDashboardShowcasePreview() {
 fun FinanceDashboardDarkShowcasePreview() {
     CalmKitTheme(darkTheme = true) {
         FinanceDashboardShowcase()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun EmptyStateShowcasePreview() {
+    CalmKitTheme {
+        EmptyStateShowcase()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SettingsShowcasePreview() {
+    CalmKitTheme {
+        SettingsShowcase()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SettingsDarkShowcasePreview() {
+    CalmKitTheme {
+        SettingsDarkShowcase()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun OnboardingShowcasePreview() {
+    CalmKitTheme {
+        OnboardingShowcase()
     }
 }

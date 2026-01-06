@@ -53,6 +53,42 @@ fun UiKitGalleryScreen() {
         return
     }
 
+    if (screen == "empty_state") {
+        Column(Modifier.fillMaxSize().padding(16.dp)) {
+            TextButton(onClick = { setScreen("gallery") }) { Text("← Back") }
+            Spacer(Modifier.height(8.dp))
+            EmptyStateShowcase()
+        }
+        return
+    }
+
+    if (screen == "settings") {
+        Column(Modifier.fillMaxSize().padding(16.dp)) {
+            TextButton(onClick = { setScreen("gallery") }) { Text("← Back") }
+            Spacer(Modifier.height(8.dp))
+            SettingsShowcase()
+        }
+        return
+    }
+
+    if (screen == "settings_dark") {
+        Column(Modifier.fillMaxSize().padding(16.dp)) {
+            TextButton(onClick = { setScreen("gallery") }) { Text("← Back") }
+            Spacer(Modifier.height(8.dp))
+            SettingsDarkShowcase()
+        }
+        return
+    }
+
+    if (screen == "onboarding") {
+        Column(Modifier.fillMaxSize().padding(16.dp)) {
+            TextButton(onClick = { setScreen("gallery") }) { Text("← Back") }
+            Spacer(Modifier.height(8.dp))
+            OnboardingShowcase()
+        }
+        return
+    }
+
     // existing gallery UI...
     val (name, setName) = remember { mutableStateOf("") }
 
@@ -92,6 +128,62 @@ fun UiKitGalleryScreen() {
             Spacer(Modifier.height(6.dp))
             Text(
                 "Same layout, forced dark scheme.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+
+        AppCard(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { setScreen("empty_state") }
+        ) {
+            Text("Empty State", style = MaterialTheme.typography.headlineMedium)
+            Spacer(Modifier.height(6.dp))
+            Text(
+                "Calm empty UI + clear actions.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+
+        AppCard(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { setScreen("settings") }
+        ) {
+            Text("Settings + Danger Zone", style = MaterialTheme.typography.headlineMedium)
+            Spacer(Modifier.height(6.dp))
+            Text(
+                "Toggles, sections, and destructive actions.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+
+        AppCard(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { setScreen("settings_dark") }
+        ) {
+            Text("Settings (Dark)", style = MaterialTheme.typography.headlineMedium)
+            Spacer(Modifier.height(6.dp))
+            Text(
+                "Forced dark theme preview.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+
+        AppCard(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { setScreen("onboarding") }
+        ) {
+            Text("Onboarding Kit", style = MaterialTheme.typography.headlineMedium)
+            Spacer(Modifier.height(6.dp))
+            Text(
+                "3-screen flow with dots + next/back.",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
