@@ -38,7 +38,7 @@ import com.example.calmkit.ui.components.AppTextField
 import com.example.calmkit.ui.components.PrimaryButton
 import com.example.calmkit.ui.theme.CalmKitTheme
 
-private enum class PreviewKind { FINANCE, SETTINGS, EMPTY, ONBOARDING }
+private enum class PreviewKind { FINANCE, SETTINGS, EMPTY, ONBOARDING, PROFILE, PRICING, NOTIFICATIONS }
 
 private data class GalleryItem(
     val title: String,
@@ -116,6 +116,33 @@ fun UiKitGalleryScreen() {
         return
     }
 
+    if (screen == "profile") {
+        Column(Modifier.fillMaxSize().padding(16.dp)) {
+            TextButton(onClick = { setScreen("gallery") }) { Text("← Back") }
+            Spacer(Modifier.height(8.dp))
+            ProfileShowcase()
+        }
+        return
+    }
+
+    if (screen == "pricing") {
+        Column(Modifier.fillMaxSize().padding(16.dp)) {
+            TextButton(onClick = { setScreen("gallery") }) { Text("← Back") }
+            Spacer(Modifier.height(8.dp))
+            PricingShowcase()
+        }
+        return
+    }
+
+    if (screen == "notifications") {
+        Column(Modifier.fillMaxSize().padding(16.dp)) {
+            TextButton(onClick = { setScreen("gallery") }) { Text("← Back") }
+            Spacer(Modifier.height(8.dp))
+            NotificationsShowcase()
+        }
+        return
+    }
+
     // existing gallery UI...
     val (name, setName) = remember { mutableStateOf("") }
 
@@ -163,7 +190,28 @@ fun UiKitGalleryScreen() {
             route = "onboarding",
             previewHeight = 155,
             kind = PreviewKind.ONBOARDING
-        )
+        ),
+        GalleryItem(
+            title = "Profile",
+            subtitle = "Avatar, stats chips, quick actions.",
+            route = "profile",
+            previewHeight = 175,
+            kind = PreviewKind.PROFILE
+        ),
+        GalleryItem(
+            title = "Pricing",
+            subtitle = "Plan cards + toggle + CTA.",
+            route = "pricing",
+            previewHeight = 165,
+            kind = PreviewKind.PRICING
+        ),
+        GalleryItem(
+            title = "Notifications",
+            subtitle = "Toggles + recent list.",
+            route = "notifications",
+            previewHeight = 180,
+            kind = PreviewKind.NOTIFICATIONS
+        ),
     )
 
     Column(
@@ -262,6 +310,27 @@ private fun PreviewTile(
             PreviewKind.ONBOARDING -> OnboardingPreviewDoodle(
                 outline = outline,
                 dot = accent,
+                soft = textSoft,
+                modifier = Modifier.fillMaxSize()
+            )
+
+            PreviewKind.PROFILE -> ProfilePreviewDoodle(
+                outline = outline,
+                accent = accent,
+                soft = textSoft,
+                modifier = Modifier.fillMaxSize()
+            )
+
+            PreviewKind.PRICING -> PricingPreviewDoodle(
+                outline = outline,
+                accent = accent,
+                soft = textSoft,
+                modifier = Modifier.fillMaxSize()
+            )
+
+            PreviewKind.NOTIFICATIONS -> NotificationsPreviewDoodle(
+                outline = outline,
+                accent = accent,
                 soft = textSoft,
                 modifier = Modifier.fillMaxSize()
             )
@@ -497,6 +566,87 @@ private fun OnboardingPreviewDoodle(
                     .size(width = 74.dp, height = 28.dp)
                     .background(outline, RoundedCornerShape(999.dp))
             )
+        }
+    }
+}
+
+@Composable
+private fun ProfilePreviewDoodle(
+    outline: androidx.compose.ui.graphics.Color,
+    accent: androidx.compose.ui.graphics.Color,
+    soft: androidx.compose.ui.graphics.Color,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier, verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Box(Modifier.size(34.dp).background(outline, CircleShape))
+            Spacer(Modifier.width(10.dp))
+            Column(Modifier.weight(1f)) {
+                Box(Modifier.size(width = 90.dp, height = 10.dp).background(soft, RoundedCornerShape(999.dp)))
+                Spacer(Modifier.height(6.dp))
+                Box(Modifier.size(width = 130.dp, height = 8.dp).background(soft.copy(alpha = 0.7f), RoundedCornerShape(999.dp)))
+            }
+        }
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            repeat(3) {
+                Box(
+                    Modifier.weight(1f).height(28.dp)
+                        .background(outline.copy(alpha = 0.7f), RoundedCornerShape(999.dp))
+                )
+            }
+        }
+        Box(
+            Modifier.fillMaxWidth().height(40.dp)
+                .background(accent.copy(alpha = 0.20f), RoundedCornerShape(16.dp))
+        )
+    }
+}
+
+@Composable
+private fun PricingPreviewDoodle(
+    outline: androidx.compose.ui.graphics.Color,
+    accent: androidx.compose.ui.graphics.Color,
+    soft: androidx.compose.ui.graphics.Color,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier, verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Box(Modifier.width(56.dp).height(18.dp).background(outline, RoundedCornerShape(999.dp)))
+            Box(Modifier.width(56.dp).height(18.dp).background(accent.copy(alpha = 0.25f), RoundedCornerShape(999.dp)))
+        }
+        Box(Modifier.fillMaxWidth().height(64.dp).background(outline.copy(alpha = 0.7f), RoundedCornerShape(18.dp)))
+        Box(Modifier.fillMaxWidth().height(74.dp).background(accent.copy(alpha = 0.18f), RoundedCornerShape(18.dp)))
+        Box(Modifier.fillMaxWidth().height(34.dp).background(outline, RoundedCornerShape(999.dp)))
+    }
+}
+
+@Composable
+private fun NotificationsPreviewDoodle(
+    outline: androidx.compose.ui.graphics.Color,
+    accent: androidx.compose.ui.graphics.Color,
+    soft: androidx.compose.ui.graphics.Color,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier, verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        // toggle hints
+        repeat(2) { i ->
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier.weight(1f)) {
+                    Box(Modifier.size(width = 120.dp, height = 10.dp).background(soft, RoundedCornerShape(999.dp)))
+                    Spacer(Modifier.height(6.dp))
+                    Box(Modifier.size(width = 160.dp, height = 8.dp).background(soft.copy(alpha = 0.7f), RoundedCornerShape(999.dp)))
+                }
+                Spacer(Modifier.width(10.dp))
+                Box(
+                    Modifier.size(width = 40.dp, height = 22.dp)
+                        .background(if (i == 0) accent.copy(alpha = 0.25f) else outline, RoundedCornerShape(999.dp))
+                )
+            }
+            Box(Modifier.fillMaxWidth().height(1.dp).background(outline))
+        }
+        // list hints
+        repeat(2) {
+            Box(Modifier.fillMaxWidth().height(10.dp).background(soft.copy(alpha = 0.7f), RoundedCornerShape(999.dp)))
         }
     }
 }
